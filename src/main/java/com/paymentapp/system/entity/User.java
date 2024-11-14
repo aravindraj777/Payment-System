@@ -1,12 +1,12 @@
 package com.paymentapp.system.entity;
 
 import com.paymentapp.system.enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String password;
@@ -28,4 +30,8 @@ public class User {
 
     private String otp;
     private LocalDateTime expiryTime;
+
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Payments> payments  = new ArrayList<>();
 }
